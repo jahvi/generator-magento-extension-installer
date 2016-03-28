@@ -55,6 +55,8 @@ module.exports = yeoman.Base.extend({
             log.create(files[i]);
           }
         });
+
+      // Extract from archive URL
       } else {
         this.extract(source, '.', function (err) {
           if (err) {
