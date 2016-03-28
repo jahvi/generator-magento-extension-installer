@@ -40,7 +40,6 @@ module.exports = yeoman.Base.extend({
     fetch: function () {
       var source = this.props.source;
       var log = this.log;
-      var fs = this.fs;
 
       // Install from github url
       if (isGithubUrl(source, {repository: true})) {
@@ -63,7 +62,7 @@ module.exports = yeoman.Base.extend({
             log(err);
           }
 
-          fs.delete('package.xml');
+          fs.remove('package.xml');
         });
       }
     }
