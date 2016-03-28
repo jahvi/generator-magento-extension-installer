@@ -1,6 +1,10 @@
 'use strict';
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
+var isGithubUrl = require('is-github-url');
+var gh = require('parse-github-url');
+var glob = require('glob');
+var fs = require('fs-extra');
 
 module.exports = yeoman.Base.extend({
 
@@ -21,28 +25,36 @@ module.exports = yeoman.Base.extend({
     this.log(ml);
 
     var prompts = [{
-      type: 'confirm',
-      name: 'someAnswer',
-      message: 'Would you like to enable this option?',
-      default: true
+      type: 'input',
+      name: 'source',
+      message: 'What is the location of the extension?'
     }];
 
     this.prompt(prompts, function (props) {
       this.props = props;
-      // To access props later use this.props.someAnswer;
-
       done();
     }.bind(this));
   },
 
-  writing: function () {
-    this.fs.copy(
-      this.templatePath('dummyfile.txt'),
-      this.destinationPath('dummyfile.txt')
-    );
-  },
+  writing: {
+    fetch: function () {
+      var source = this.props.source;
+      var log = this.log;
 
-  install: function () {
-    this.installDependencies();
+      // Install from github url
+      if (isGithubUrl(source, {repository: true})) {
+        var repo = gh(source);
+
+        this.remote(repo.owner, repo.name, function (err, remote) {
+          // Ignore top level files
+          var files = glob.sync('*/**', {dot: true, nodir: true, cwd: remote.cachePath});
+
+          for (var i in files) {
+            fs.copy(remote.cachePath + '/' + files[i], files[i]);
+            log.create(files[i]);
+          }
+        });
+      }
+    }
   }
 });

@@ -9,10 +9,4 @@ describe('generator-magento-extension-installer:app', function () {
       .withPrompts({someAnswer: true})
       .on('end', done);
   });
-
-  it('creates files', function () {
-    assert.file([
-      'dummyfile.txt'
-    ]);
-  });
 });

@@ -18,8 +18,12 @@
     "install"
   ],
   "dependencies": {
-    "yeoman-generator": "^0.22.0",
-    "chalk": "^1.0.0"
+    "chalk": "^1.0.0",
+    "fs-extra": "^0.26.7",
+    "glob": "^7.0.3",
+    "is-github-url": "^1.2.2",
+    "parse-github-url": "^0.3.0",
+    "yeoman-generator": "^0.22.0"
   },
   "devDependencies": {
     "yeoman-test": "^1.0.0",
