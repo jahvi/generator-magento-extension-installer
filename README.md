@@ -28,7 +28,6 @@ yo magento-extension-installer
 
 MIT © [Javier Villanueva](http://jahvi.com/)
 
-
 [npm-image]: https://badge.fury.io/js/generator-magento-extension-installer.svg
 [npm-url]: https://npmjs.org/package/generator-magento-extension-installer
 [travis-image]: https://travis-ci.org/jahvi/generator-magento-extension-installer.svg?branch=master
