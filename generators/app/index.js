@@ -40,6 +40,7 @@ module.exports = yeoman.Base.extend({
     fetch: function () {
       var source = this.props.source;
       var log = this.log;
+      var fs = this.fs;
 
       // Install from github url
       if (isGithubUrl(source, {repository: true})) {
@@ -53,6 +54,14 @@ module.exports = yeoman.Base.extend({
             fs.copy(remote.cachePath + '/' + files[i], files[i]);
             log.create(files[i]);
           }
+        });
+      } else {
+        this.extract(source, '.', function (err) {
+          if (err) {
+            log(err);
+          }
+
+          fs.delete('package.xml');
         });
       }
     }
