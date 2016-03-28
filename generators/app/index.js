@@ -46,10 +46,14 @@ module.exports = yeoman.Base.extend({
         var repo = gh(source);
 
         this.remote(repo.owner, repo.name, repo.branch, function (err, remote) {
+          if (err) {
+            log(err);
+          }
+
           // Ignore top level files
           var files = glob.sync('*/**', {dot: true, nodir: true, cwd: remote.cachePath});
 
-          for (var i in files) {
+          for (var i = files.length - 1; i >= 0; i--) {
             fs.copy(remote.cachePath + '/' + files[i], files[i]);
             log.create(files[i]);
           }
