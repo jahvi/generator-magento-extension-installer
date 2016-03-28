@@ -46,7 +46,7 @@ module.exports = yeoman.Base.extend({
       if (isGithubUrl(source, {repository: true})) {
         var repo = gh(source);
 
-        this.remote(repo.owner, repo.name, function (err, remote) {
+        this.remote(repo.owner, repo.name, repo.branch, function (err, remote) {
           // Ignore top level files
           var files = glob.sync('*/**', {dot: true, nodir: true, cwd: remote.cachePath});
 
