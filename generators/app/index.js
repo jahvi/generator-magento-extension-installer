@@ -3,8 +3,6 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var isGithubUrl = require('is-github-url');
 var gh = require('parse-github-url');
-var glob = require('glob');
-var fs = require('fs-extra');
 
 module.exports = yeoman.Base.extend({
 
@@ -40,6 +38,7 @@ module.exports = yeoman.Base.extend({
     fetch: function () {
       var source = this.props.source;
       var log = this.log;
+      var fs = this.fs;
 
       // Install from github url
       if (isGithubUrl(source, {repository: true})) {
@@ -51,12 +50,7 @@ module.exports = yeoman.Base.extend({
           }
 
           // Ignore top level files
-          var files = glob.sync('*/**', {dot: true, nodir: true, cwd: remote.cachePath});
-
-          for (var i = files.length - 1; i >= 0; i--) {
-            fs.copy(remote.cachePath + '/' + files[i], files[i]);
-            log.create(files[i]);
-          }
+          fs.copy('*/**', '.', {globOptions: {dot: true, cwd: remote.cachePath}});
         });
 
       // Extract from archive URL
@@ -66,7 +60,8 @@ module.exports = yeoman.Base.extend({
             log(err);
           }
 
-          fs.remove('package.xml');
+          // Delete unnecessary files
+          fs.delete('package.xml');
         });
       }
     }
