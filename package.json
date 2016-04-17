@@ -1,6 +1,6 @@
 {
   "name": "generator-magento-extension-installer",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Install Magento extensions from different sources",
   "author": {
     "name": "Javier Villanueva",
